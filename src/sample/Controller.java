@@ -247,7 +247,7 @@ public class Controller {
 
             String text;
             while ((text = bufferedReader.readLine()) != null) {
-                stringBuffer.append(text);
+                stringBuffer.append("\n" + text);
             }
 
         } catch (FileNotFoundException ex) {
