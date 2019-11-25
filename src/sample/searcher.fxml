@@ -29,7 +29,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <TextField fx:id="typeForSearch" layoutX="707.0" layoutY="71.0" onKeyPressed="#setSearchedType" promptText="change filetype" />
+      <TextField fx:id="typeForSearch" layoutX="707.0" layoutY="71.0" onKeyPressed="#setSearchedType" text="." />
       <Text layoutX="707.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current file type:" wrappingWidth="114.6708984375" />
       <Text fx:id="currentType" layoutX="829.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*.log" />
       
