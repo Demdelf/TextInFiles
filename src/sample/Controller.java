@@ -8,13 +8,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controller {
     public Text currentType;
@@ -30,6 +27,7 @@ public class Controller {
     @FXML
     public TextArea text;
     List<Path> filteredFiles = new ArrayList<>();
+    Model model = new Model(this);
 
 
     public List<Path> getFilteredFiles() {
@@ -74,19 +72,16 @@ public class Controller {
             tree.setRoot(null);
             setTextForSearch();
         }
-
     }
 
     public void setSearchedPath(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
-
             setPathForSearch();
         }
     }
 
     public void setSearchedType(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
-
             setTypeForSearch();
         }
     }
@@ -100,19 +95,17 @@ public class Controller {
     }
 
     public void setTextForSearch(){
-        //tree.addEventHandler();
         this.searchedText = textForSearch.getText();
         filteredFiles = new ArrayList<>();
-        text.setText("");
+        setText("");
         fileList = getFileList();
     }
 
     public void showText(Path file){
-        text.setText(getStringFromFile(fileList, file));
+        setText(model.getStringFromFile(fileList, file));
     }
 
     private void getFilteredFiles(File dir){
-        File[] files = null;
         List<Path> list = new ArrayList<>();
         try{
 
@@ -134,7 +127,7 @@ public class Controller {
             }
             if (!file.isDirectory()) {
                 try {
-                    if (searchText(file, getSearchedText())) {
+                    if (model.searchText(file, getSearchedText())) {
                         filteredFiles.add(Paths.get(file.getCanonicalPath()));
                     }
                 } catch (IOException e) {
@@ -148,22 +141,6 @@ public class Controller {
                 }*/
             }
         }
-    }
-
-    private boolean searchText(File file, String string) throws IOException {
-        Path path = Paths.get(file.getCanonicalPath());
-        System.out.println("Searching " + string + " in " + path.toString());
-        boolean result = false;
-        try {
-            result = Files.
-                    lines(path, StandardCharsets.UTF_8).
-                    anyMatch((s) -> s.contains(string));
-        }catch (Exception e){
-            System.out.println("Bad format");
-        }
-
-        System.out.println(result);
-        return result;
     }
 
     private List<Path> getFileList(){
@@ -180,7 +157,6 @@ public class Controller {
         }
         List<Path> foundFiles = getFilteredFiles();
 
-
         if(foundFiles.size() > 1){
             foundFiles.sort((o1, o2) -> o1.toString().length() - o2.toString().length());
         }
@@ -189,10 +165,8 @@ public class Controller {
             List<Path> list = new ArrayList<>();
             System.out.println(file);
             while (!file.equals(Paths.get(getPath()))){
-
                 list.add(file);
-                Path parent = file.getParent();
-                file = parent;
+                file = file.getParent();
             }
 
             list.sort(new Comparator<Path>() {
@@ -217,52 +191,7 @@ public class Controller {
                 }
             }
         }
-
         return foundFiles;
-    }
-
-    private String getStringFromFile(List<Path> foundFiles, Path chosenFile){
-        String s = "";
-        File file = null;
-        for (Path p: foundFiles
-        ) {
-            if(p.equals(chosenFile)){
-                file = p.toFile();
-            }
-        }
-        if(file.length() > 0){
-            s = readFile(file);
-            System.out.println(s);
-        }
-        return s;
-    }
-
-    private static String readFile(File file){
-        StringBuilder stringBuffer = new StringBuilder();
-        BufferedReader bufferedReader = null;
-
-        try {
-
-            bufferedReader = new BufferedReader(new FileReader(file));
-
-            String text;
-            while ((text = bufferedReader.readLine()) != null) {
-                stringBuffer.append("\n" + text);
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        return stringBuffer.toString();
     }
 
     public void setSearchedFile(MouseEvent mouseEvent) {
