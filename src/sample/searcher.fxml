@@ -15,7 +15,7 @@
       <Button fx:id="search" layoutX="43.0" layoutY="86.0" mnemonicParsing="false" onAction="#buttonClicked" text="Search" />
       <Text layoutX="416.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current path:" wrappingWidth="125.6708984375" />
       <Text fx:id="currentPath" layoutX="516.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C:/logs" wrappingWidth="186.9999898672104" />
-      <SplitPane dividerPositions="0.29797979797979796" layoutX="32.0" layoutY="131.0" prefHeight="688.0" prefWidth="1154.0">
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="32.0" layoutY="168.0" prefHeight="651.0" prefWidth="1154.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -32,6 +32,9 @@
       <TextField fx:id="typeForSearch" layoutX="707.0" layoutY="71.0" onKeyPressed="#setSearchedType" text="." />
       <Text layoutX="707.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current file type:" wrappingWidth="114.6708984375" />
       <Text fx:id="currentType" layoutX="829.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*.log" />
+      <Text fx:id="currentFile" layoutX="416.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current file:" wrappingWidth="290.6708984375" />
+      <Text fx:id="numberOfFoundedFiles" layoutX="860.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Files found: " />
+      <Text fx:id="searchTime" layoutX="1047.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search time: " />
       
    </children>
 </AnchorPane>

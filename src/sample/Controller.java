@@ -9,11 +9,15 @@ import javafx.scene.text.Text;
 
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Controller {
     public Text currentType;
     public TextField typeForSearch;
+    public Text searchTime;
+    public Text numberOfFoundedFiles;
+    public Text currentFile;
     List<Path> fileList;
     public TextField textForSearch;
     public TextField pathForSearch;
@@ -26,6 +30,7 @@ public class Controller {
     public TextArea text;
     List<Path> filteredFiles = new ArrayList<>();
     Model model = new Model(this);
+    private Date timeStart;
 
 
     public List<Path> getFilteredFiles() {
@@ -92,11 +97,17 @@ public class Controller {
         setFileType(typeForSearch.getText());
     }
 
+    //запуск поиска
     public void setTextForSearch(){
+        timeStart = new Date();
+        searchTime.setText("Search time: ");
+        numberOfFoundedFiles.setText("Files found: " + 0);
         this.searchedText = textForSearch.getText();
         filteredFiles = new ArrayList<>();
         setText("");
         fileList = model.getFileList(this);
+        long timeDiff = new Date().getTime() - timeStart.getTime();
+        searchTime.setText("Search time: " + String.valueOf(timeDiff) + " ms");
     }
 
     public void showText(Path file){

@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 public class Model {
 
     private final Controller controller;
+    private int qF = 0;
 
 
     public Model(Controller controller) {
@@ -53,6 +54,7 @@ public class Model {
     //Проверяем содержит ли файл искомый текст
     boolean searchText(File file, String string) throws IOException {
         Path path = Paths.get(file.getCanonicalPath());
+        controller.currentFile.setText("Current file:" + path.toString());
         System.out.println("Searching " + string + " in " + path.toString());
         boolean result = false;
         try {
@@ -161,6 +163,9 @@ public class Model {
                 try {
                     if (searchText(file, controller.getSearchedText())) {
                         controller.filteredFiles.add(Paths.get(file.getCanonicalPath()));
+                        qF++;
+                        controller.numberOfFoundedFiles.setText("Files found: " + qF);
+
                     }
                 } catch (IOException e) {
                     System.out.println("Error 1");
