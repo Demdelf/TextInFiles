@@ -102,6 +102,7 @@ public class Controller {
         timeStart = new Date();
         searchTime.setText("Search time: ");
         numberOfFoundedFiles.setText("Files found: " + 0);
+        model.setqF(0);
         this.searchedText = textForSearch.getText();
         filteredFiles = new ArrayList<>();
         setText("");

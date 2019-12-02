@@ -14,6 +14,11 @@ import java.util.logging.Logger;
 public class Model {
 
     private final Controller controller;
+
+    public void setqF(int qF) {
+        this.qF = qF;
+    }
+
     private int qF = 0;
 
 
@@ -144,7 +149,9 @@ public class Model {
         try{
 
                     Files.newDirectoryStream(Paths.get(dir.getCanonicalPath()),
-                            path -> path.toString().endsWith(controller.getFileType())||path.toFile().isDirectory()).forEach(p -> list.add(p));
+                            path -> path.toString().
+                                    endsWith(controller.getFileType())||path.toFile().isDirectory()).
+                            forEach(p -> list.add(p));
         }catch (IOException e) {
             e.printStackTrace();
         }
